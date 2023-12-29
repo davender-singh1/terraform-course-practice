@@ -267,13 +267,12 @@ output "instance_pub_ip" {
 For s3, the bucket name should be unique
 
 ```
-resource "aws_s3_bucket" "b" {
-  bucket = "trainwithshubham-tf-test-bucket"
-
-  tags = {
-    Name        = "trainwithshubham-bucket"
-    Environment = "Dev"
-  }
+resource "aws_s3_bucket" "my_s3_bucket" {
+	bucket = "terraform-davender1366-123"
+	tags = {
+	Name = "terraform-davender1366-123"
+        Environment = "Dev"
+}
 }
 ```
 
