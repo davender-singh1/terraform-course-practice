@@ -254,6 +254,10 @@ resource "aws_instance" "aws_ec2_instance" {
 }
 ```
 
+![ec2 running](https://github.com/davender-singh1/terraform-course-practice/assets/106000634/01e0fa64-7271-4b25-b141-605ffa8a275b)
+
+
+
 ## Task-03 - Get the Public IPs for the provisioned instances
 
 ```
@@ -261,6 +265,10 @@ output "instance_pub_ip" {
         value = aws_instance.aws_ec2_test[*].public_ip
 }
 ```
+
+
+![terra](https://github.com/davender-singh1/terraform-course-practice/assets/106000634/d9680f68-6f50-4655-91ed-005cbc71b0fc)
+
 
 ## Task-4 - AWS S3
 
