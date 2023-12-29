@@ -480,3 +480,7 @@ path = "relative/path/to/terraform.tfstate"
 }
 ```
 
+
+![tf state using s3](https://github.com/davender-singh1/terraform-course-practice/assets/106000634/cc09dcf6-103b-4261-b0a1-9dd02c7332b0)
+
+
