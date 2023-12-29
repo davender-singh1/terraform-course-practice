@@ -361,63 +361,30 @@ Like the count argument, the for_each meta-argument creates multiple instances o
 ```
 
 terraform {
-
 required_providers {
-
-aws = {
-
-source = "hashicorp/aws"
-
-version = "~> 4.16"
-
+	aws = {
+	source = "hashicorp/aws"
+	version = "~> 4.16"
 }
-
 }
-
-required_version = ">= 1.2.0"
-
+	required_version = ">= 1.2.0"
 }
-
-
 
 provider "aws" {
-
-region = "us-east-1"
-
+	region = "us-east-1"
 }
-
-
 
 locals {
-
-ami_ids = toset([
-
-"ami-0b0dcb5067f052a63",
-
-"ami-08c40ec9ead489470",
-
-])
-
+	instances = {"Devender":"ami-079db87dc4c10ac91","Daven":"ami-0c7217cdde317cfec","Mohit":"ami-0c7217cdde317cfec","Monu":"ami-079db87dc4c10ac91"}
 }
 
-
-
-resource "aws_instance" "server" {
-
-for_each = local.ami_ids
-
-
-
-ami = each.key
-
-instance_type = "t2.micro"
-
-tags = {
-
-Name = "Server ${each.key}"
-
-}
-
+resource "aws_instance" "aws_ec2_test" {
+        for_each = local.instances
+        ami = each.value
+        instance_type = "t2.micro"
+        tags = {
+     Name = each.key
+  }
 }
 
 
@@ -465,4 +432,51 @@ Name = "Server ${each.key}"
 
 1. Remote Backends
 2. State Locking
+
+
+## Terraform State commands:
+
+terraform state list : List resources within terraform state. 
+
+terraform-state mv : Move items within terraform state. This will be used to resource renaming without destroy, apply command 
+
+terraform state pull : Manually download and output the state from the state file. 
+
+terraform state push : Manually upload a local state file to the remote state
+
+terraform state rm : Remove items from the state. Items removed from the state are not physically destroyed. This item no longer managed by Terraform. 
+
+terraform state show: Show attributes of a single resource in the state.
+
+
+## States:
+
+Terraform uses state to keep track of the infrastructure it manages. To use Terraform effectively, you must keep your state accurate and secure.
+
+
+State Locking:
+
+State locking happens automatically on all operations that could write state. You won’t see any message that it is happening. If state locking fails, terraform will not continue. You can disable state locking in most commands with the -lock flag but it is not recommended.
+Terraform has a force-unlock command to manually unlock the state if unlocking failed.
+Syntax: terraform force-unlock [options] LOCK_ID [DIR]
+
+Backend Management:
+
+A backend in Terraform determines how state is loaded and how an operation such as apply is executed
+Terraform must initialize any configured backend before use.
+
+Local:
+
+By default, terraform uses the “local” backend. After running first terraform apply the terraform.tfstate file created in the same directory of main.tf
+terraform.tfstate file contains JSON data.
+
+The local backend stores state on the local filesystem, locks the state using system APIs, and performs operations locally
+
+```
+terraform {
+backend "local" {
+path = "relative/path/to/terraform.tfstate"
+}
+}
+```
 
