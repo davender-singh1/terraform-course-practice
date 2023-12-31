@@ -403,13 +403,9 @@ ami_ids = {
 
 }
 
-
-
 resource "aws_instance" "server" {
 
 for_each = local.ami_ids
-
-
 
 ami = each.value
 
